@@ -28,6 +28,19 @@ def process_words(words):
 
     return wordList
 
+def generate_matrix(tweets, words):
+
+    wordsLentgh = len(words)
+    featureMatrix = []
+
+    for tweet in tweets:
+        featureVector = [0] * wordsLentgh
+        for i in range(wordsLentgh):
+            featureVector[i] = tweet[2].count(words[i])
+        featureMatrix.append(featureVector)
+
+    return featureMatrix
+
 with open(tweetsFile, encoding = "utf-8") as tweetsHandle:
     tweets = tweetsHandle.readlines()
 with open(wordsFile, encoding = "utf-8") as wordsHandle:
@@ -37,3 +50,6 @@ cleanTweetsWithLabels = process_tweets(tweets)
 # print(cleanTweetsWithLabels)
 wordList = process_words(words)
 # print(wordList)
+featureMatrix = generate_matrix(cleanTweetsWithLabels, wordList)
+# print(len(featureMatrix), len(featureMatrix[0]))
+# print(featureMatrix)
