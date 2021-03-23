@@ -24,7 +24,7 @@ def process_words(words):
     wordList = []
 
     for word in words:
-        wordList.append(word.strip("\n").lower())
+        wordList.append(word.strip().lower())
 
     return wordList
 
@@ -36,6 +36,7 @@ def generate_matrix(tweets, words):
     for tweet in tweets:
         featureVector = [0] * wordsLentgh
         for i in range(wordsLentgh):
+            # tweet[2] is the sub-list that contains the actual tweet
             featureVector[i] = tweet[2].count(words[i])
         featureMatrix.append(featureVector)
 
