@@ -10,12 +10,37 @@ def extract_manual_features(tweet):
 
     '''
     Takes a not-yet-processed tweet in the form of [word1, word2, ..., wordn]
-    returns a list of manual features described in ../resource/2872427.2883062.pdf
+    returns a list of manual features adapted from ../resource/2872427.2883062.pdf
+
+    - length of comment in tokens
+    - average length of word
+    - number of periods, question marks, quotes, and exclamation marks
+    - number of one letter tokens
+    - number of capitalized letters
+    - number of non-alpha characters
     '''
 
-    manual_features = []
+    # print(tweet)
+    length = len(tweet)
+    averageWordLength = sum([len(word) for word in tweet])//length
+    oneLetter = sum([1 for word in tweet if len(word) == 1])
 
-    
+    tweet = " ".join(tweet)
+
+    punctuationCount = 0
+    for each in [".","?","\"","\'","!"]:
+        punctuationCount += tweet.count(each)
+
+    capitalized = 0
+    nonAlpha = 0
+    for each in tweet:
+        if each.isupper():
+            capitalized += 1
+        if not each.isalpha() and each != " ":
+            nonAlpha += 1
+
+    manual_features = [length, averageWordLength, oneLetter, punctuationCount, capitalized, nonAlpha]
+    # print(manual_features)
 
     return manual_features
 
@@ -59,9 +84,9 @@ def generate_matrix(tweets, words):
         for i in range(wordsLentgh):
             # tweet[2] is the sub-list that contains the actual tweet
             featureVector[i] = tweet[2].count(words[i])
-            #
-            featureVector.extend(tweet[3])
-            # tweet[4] is the label
+        # tweet[3] are the manual features
+        featureVector.extend(tweet[3])
+        # tweet[4] is the label
         featureVector.append(tweet[4])
         # print(tweet[3])
         featureMatrix.append(featureVector)
