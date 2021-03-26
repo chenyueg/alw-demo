@@ -10,7 +10,7 @@ def extract_manual_features(tweet):
 
     '''
     Takes a not-yet-processed tweet in the form of [word1, word2, ..., wordn]
-    returns a list of manual features adapted from ../resource/2872427.2883062.pdf
+    Returns a list of manual features adapted from ../resource/2872427.2883062.pdf
 
     - length of comment in tokens
     - average length of word
@@ -67,6 +67,11 @@ def process_tweets(tweets):
 
 def process_words(words):
 
+    '''
+    Takes a file with each line being one word
+    Returns a list of lowercase word
+    '''
+
     wordList = []
 
     for word in words:
@@ -75,6 +80,12 @@ def process_words(words):
     return wordList
 
 def generate_matrix(tweets, words):
+
+    '''
+    Takes a list of processed tweets
+    Returns a feature matrix
+    See detailed comments below
+    '''
 
     wordsLentgh = len(words)
     featureMatrix = []
